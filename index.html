@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spectrum | Gerador de Paletas de Cores</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #1a2530;
+        }
+
+        body {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(26, 37, 48, 0.7);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-out;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        button {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            background: var(--secondary);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        button i {
+            font-size: 1.2rem;
+        }
+
+        .btn-generate {
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+        }
+
+        .btn-lock {
+            background: linear-gradient(to right, #3498db, #2ecc71);
+        }
+
+        .btn-save {
+            background: linear-gradient(to right, #9b59b6, #e74c3c);
+        }
+
+        .palette-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .color-card {
+            background: rgba(26, 37, 48, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            animation: slideUp 0.5s ease-out;
+            backdrop-filter: blur(10px);
+        }
+
+        .color-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .color-preview {
+            height: 150px;
+            transition: all 0.5s ease;
+        }
+
+        .color-info {
+            padding: 1rem;
+        }
+
+        .color-value {
+            font-family: monospace;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .color-name {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        .color-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .color-actions button {
+            padding: 0.5rem;
+            font-size: 0.8rem;
+            flex: 1;
+        }
+
+        .lock-btn {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .locked {
+            background: rgba(231, 76, 60, 0.8);
+        }
+
+        .saved-palettes {
+            background: rgba(26, 37, 48, 0.7);
+            border-radius: 15px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-out;
+        }
+
+        .saved-palettes h2 {
+            margin-bottom: 1rem;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        .saved-palettes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .saved-palette {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .saved-palette:hover {
+            transform: scale(1.05);
+        }
+
+        .saved-colors {
+            display: flex;
+            height: 80px;
+        }
+
+        .saved-color {
+            flex: 1;
+        }
+
+        .saved-palette-name {
+            padding: 0.5rem;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            background: rgba(26, 37, 48, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .palette-container {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-palette"></i> Spectrum</h1>
+            <p class="subtitle">Gerador de paletas de cores harmoniosas para seus projetos</p>
+            <div class="controls">
+                <button class="btn-generate" id="generateBtn">
+                    <i class="fas fa-magic"></i> Gerar Nova Paleta
+                </button>
+                <button class="btn-lock" id="lockAllBtn">
+                    <i class="fas fa-lock"></i> Travar/Destravar Tudo
+                </button>
+                <button class="btn-save" id="saveBtn">
+                    <i class="fas fa-save"></i> Salvar Paleta
+                </button>
+            </div>
+        </header>
+        
+        <main>
+            <div class="palette-container" id="paletteContainer">
+                <!-- As cartas de cores serão geradas aqui via JavaScript -->
+            </div>
+            
+            <section class="saved-palettes">
+                <h2><i class="fas fa-bookmark"></i> Paletas Salvas</h2>
+                <div class="saved-palettes-grid" id="savedPalettes">
+                    <!-- As paletas salvas serão exibidas aqui -->
+                </div>
+            </section>
+        </main>
+        
+        <footer>
+            <p>Spectrum 2025 - Gerador de Paletas de Cores</p>
+        </footer>
+    </div>
+    
+    <div class="notification" id="notification">
+        <span id="notificationText"></span>
+    </div>
+
+    <audio id="clickSound" src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" preload="auto"></audio>
+    <audio id="generateSound" src="https://assets.mixkit.co/sfx/preview/mixkit-magic-sparkle-sound-3090.mp3" preload="auto"></audio>
+    <audio id="lockSound" src="https://assets.mixkit.co/sfx/preview/mixkit-cool-interface-click-tone-2568.mp3" preload="auto"></audio>
+    <audio id="saveSound" src="https://assets.mixkit.co/sfx/preview/mixkit-unlock-game-notification-253.mp3" preload="auto"></audio>
+
+    <script>
+        // Elementos DOM
+        const paletteContainer = document.getElementById('paletteContainer');
+        const generateBtn = document.getElementById('generateBtn');
+        const lockAllBtn = document.getElementById('lockAllBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const savedPalettes = document.getElementById('savedPalettes');
+        const notification = document.getElementById('notification');
+        const notificationText = document.getElementById('notificationText');
+        
+        // Sons
+        const clickSound = document.getElementById('clickSound');
+        const generateSound = document.getElementById('generateSound');
+        const lockSound = document.getElementById('lockSound');
+        const saveSound = document.getElementById('saveSound');
+        
+        // Estado da aplicação
+        let currentPalette = [];
+        let lockedColors = [];
+        let savedPalettesList = JSON.parse(localStorage.getItem('savedPalettes')) || [];
+        
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            generatePalette();
+            renderSavedPalettes();
+            createParticles();
+        });
+        
+        // Gerar uma nova paleta
+        function generatePalette() {
+            playSound(generateSound);
+            currentPalette = [];
+            
+            for (let i = 0; i < 5; i++) {
+                // Se a cor estiver travada, mantenha-a
+                if (lockedColors[i]) {
+                    currentPalette.push(currentPalette[i]);
+                    continue;
+                }
+                
+                // Gera uma cor HSL harmoniosa
+                const baseHue = Math.floor(Math.random() * 360);
+                const saturation = 70 + Math.floor(Math.random() * 30);
+                const lightness = 40 + Math.floor(Math.random() * 40);
+                
+                // Varia o matiz para criar harmonia
+                const hueVariation = (i - 2) * 30;
+                const hue = (baseHue + hueVariation + 360) % 360;
+                
+                const color = hslToHex(hue, saturation, lightness);
+                currentPalette.push(color);
+            }
+            
+            renderPalette();
+        }
+        
+        // Renderizar a paleta atual
+        function renderPalette() {
+            paletteContainer.innerHTML = '';
+            
+            currentPalette.forEach((color, index) => {
+                const colorCard = document.createElement('div');
+                colorCard.className = 'color-card';
+                
+                const colorName = generateColorName(color);
+                
+                colorCard.innerHTML = `
+                    <div class="color-preview" style="background-color: ${color};"></div>
+                    <div class="color-info">
+                        <div class="color-value">
+                            <span>${color}</span>
+                            <button class="copy-btn" data-color="${color}">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="color-name">${colorName}</div>
+                        <div class="color-actions">
+                            <button class="lock-btn ${lockedColors[index] ? 'locked' : ''}" data-index="${index}">
+                                <i class="fas ${lockedColors[index] ? 'fa-lock' : 'fa-lock-open'}"></i>
+                                ${lockedColors[index] ? 'Travado' : 'Travar'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                paletteContainer.appendChild(colorCard);
+                
+                // Adicionar evento de clique para o botão de travar/destravar
+                const lockBtn = colorCard.querySelector('.lock-btn');
+                lockBtn.addEventListener('click', () => {
+                    toggleLock(index);
+                });
+                
+                // Adicionar evento de clique para o botão de copiar
+                const copyBtn = colorCard.querySelector('.copy-btn');
+                copyBtn.addEventListener('click', () => {
+                    copyToClipboard(color);
+                    showNotification(`Cor ${color} copiada!`);
+                });
+            });
+        }
+        
+        // Alternar trava de uma cor
+        function toggleLock(index) {
+            playSound(lockSound);
+            lockedColors[index] = !lockedColors[index];
+            renderPalette();
+        }
+        
+        // Travar/Destravar todas as cores
+        function toggleLockAll() {
+            playSound(lockSound);
+            const allLocked = lockedColors.every(lock => lock);
+            
+            if (allLocked) {
+                // Se todas estão travadas, destrava todas
+                lockedColors = lockedColors.map(() => false);
+            } else {
+                // Caso contrário, trava todas
+                lockedColors = lockedColors.map(() => true);
+            }
+            
+            renderPalette();
+        }
+        
+        // Salvar a paleta atual
+        function savePalette() {
+            playSound(saveSound);
+            
+            const paletteName = prompt("Digite um nome para esta paleta:");
+            if (!paletteName) return;
+            
+            const paletteToSave = {
+                name: paletteName,
+                colors: [...currentPalette],
+                date: new Date().toLocaleDateString('pt-BR')
+            };
+            
+            savedPalettesList.push(paletteToSave);
+            localStorage.setItem('savedPalettes', JSON.stringify(savedPalettesList));
+            
+            renderSavedPalettes();
+            showNotification(`Paleta "${paletteName}" salva!`);
+        }
+        
+        // Renderizar paletas salvas
+        function renderSavedPalettes() {
+            savedPalettes.innerHTML = '';
+            
+            if (savedPalettesList.length === 0) {
+                savedPalettes.innerHTML = '<p style="text-align: center; grid-column: 1 / -1;">Nenhuma paleta salva ainda.</p>';
+                return;
+            }
+            
+            savedPalettesList.forEach((palette, index) => {
+                const paletteElement = document.createElement('div');
+                paletteElement.className = 'saved-palette';
+                paletteElement.setAttribute('data-index', index);
+                
+                paletteElement.innerHTML = `
+                    <div class="saved-colors">
+                        ${palette.colors.map(color => 
+                            `<div class="saved-color" style="background-color: ${color};"></div>`
+                        ).join('')}
+                    </div>
+                    <div class="saved-palette-name">
+                        ${palette.name} <br> <small>${palette.date}</small>
+                    </div>
+                `;
+                
+                paletteElement.addEventListener('click', () => {
+                    loadPalette(index);
+                });
+                
+                savedPalettes.appendChild(paletteElement);
+            });
+        }
+        
+        // Carregar uma paleta salva
+        function loadPalette(index) {
+            playSound(clickSound);
+            const palette = savedPalettesList[index];
+            currentPalette = [...palette.colors];
+            lockedColors = currentPalette.map(() => false);
+            renderPalette();
+            showNotification(`Paleta "${palette.name}" carregada!`);
+        }
+        
+        // Copiar cor para a área de transferência
+        function copyToClipboard(text) {
+            playSound(clickSound);
+            navigator.clipboard.writeText(text).catch(err => {
+                console.error('Erro ao copiar texto: ', err);
+            });
+        }
+        
+        // Mostrar notificação
+        function showNotification(message) {
+            notificationText.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Reproduzir som
+        function playSound(sound) {
+            sound.currentTime = 0;
+            sound.play().catch(e => console.log("Reprodução de som bloqueada: ", e));
+        }
+        
+        // Gerar partículas para o fundo
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'absolute';
+                particle.style.width = `${Math.random() * 20 + 5}px`;
+                particle.style.height = particle.style.width;
+                particle.style.background = `rgba(255, 255, 255, ${Math.random() * 0.3})`;
+                particle.style.borderRadius = '50%';
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.top = `${Math.random() * 100}vh`;
+                particle.style.animation = `float ${Math.random() * 20 + 10}s linear infinite`;
+                
+                // Adicionar animação de flutuação
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes float {
+                        0% { transform: translate(0, 0) rotate(0deg); }
+                        25% { transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) rotate(90deg); }
+                        50% { transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) rotate(180deg); }
+                        75% { transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) rotate(270deg); }
+                        100% { transform: translate(0, 0) rotate(360deg); }
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Utilitários
+        function hslToHex(h, s, l) {
+            h /= 360;
+            s /= 100;
+            l /= 100;
+            
+            let r, g, b;
+            
+            if (s === 0) {
+                r = g = b = l;
+            } else {
+                const hue2rgb = (p, q, t) => {
+                    if (t < 0) t += 1;
+                    if (t > 1) t -= 1;
+                    if (t < 1/6) return p + (q - p) * 6 * t;
+                    if (t < 1/2) return q;
+                    if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+                    return p;
+                };
+                
+                const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+                const p = 2 * l - q;
+                
+                r = hue2rgb(p, q, h + 1/3);
+                g = hue2rgb(p, q, h);
+                b = hue2rgb(p, q, h - 1/3);
+            }
+            
+            const toHex = x => {
+                const hex = Math.round(x * 255).toString(16);
+                return hex.length === 1 ? '0' + hex : hex;
+            };
+            
+            return `#${toHex(r)}${toHex(g)}${toHex(b)}`.toUpperCase();
+        }
+        
+        function generateColorName(hex) {
+            // Nomes criativos para cores
+            const colorNames = [
+                "Aurora", "Crepúsculo", "Oceano", "Floresta", "Deserto",
+                "Ametista", "Safira", "Rubi", "Esmeralda", "Topázio",
+                "Lavanda", "Cereja", "Açafrão", "Jade", "Âmbar",
+                "Cobalto", "Carmesim", "Turquesa", "Magenta", "Ciano"
+            ];
+            
+            // Usar o valor hexadecimal para escolher um nome
+            const index = parseInt(hex.slice(1), 16) % colorNames.length;
+            return colorNames[index];
+        }
+        
+        // Event Listeners
+        generateBtn.addEventListener('click', generatePalette);
+        lockAllBtn.addEventListener('click', toggleLockAll);
+        saveBtn.addEventListener('click', savePalette);
+        
+        // Tecla de atalho: Espaço para gerar nova paleta
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                generatePalette();
+            }
+        });
+    </script>
+</body>
+</html>
