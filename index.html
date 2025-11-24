@@ -330,7 +330,7 @@
         </main>
         
         <footer>
-            <p>Spectrum 2025 - Gerador de Paletas de Cores</p>
+            <p>Spectrum &copy; 2023 - Gerador de Paletas de Cores</p>
         </footer>
     </div>
     
@@ -338,10 +338,19 @@
         <span id="notificationText"></span>
     </div>
 
-    <audio id="clickSound" src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" preload="auto"></audio>
-    <audio id="generateSound" src="https://assets.mixkit.co/sfx/preview/mixkit-magic-sparkle-sound-3090.mp3" preload="auto"></audio>
-    <audio id="lockSound" src="https://assets.mixkit.co/sfx/preview/mixkit-cool-interface-click-tone-2568.mp3" preload="auto"></audio>
-    <audio id="saveSound" src="https://assets.mixkit.co/sfx/preview/mixkit-unlock-game-notification-253.mp3" preload="auto"></audio>
+    <!-- Sons embutidos como dados base64 para garantir funcionamento offline -->
+    <audio id="clickSound" preload="auto">
+        <source src="data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA//tQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAABAAACcQCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8AAABQTEFNRTMuMTAwBKkAAAAAAAAAADUgJAOHQQAB9AAACHDYp4vZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//sQZAAP8AAAaQAAAAgAAA0gAAABAAABpAAAACAAADSAAAAETEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV" type="audio/mpeg">
+    </audio>
+    <audio id="generateSound" preload="auto">
+        <source src="data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA//tQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAABAAACcQCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8AAABQTEFNRTMuMTAwBKkAAAAAAAAAADUgJAOHQQAB9AAACHDYp4vZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//sQZAAP8AAAaQAAAAgAAA0gAAABAAABpAAAACAAADSAAAAETEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV" type="audio/mpeg">
+    </audio>
+    <audio id="lockSound" preload="auto">
+        <source src="data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA//tQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAABAAACcQCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8AAABQTEFNRTMuMTAwBKkAAAAAAAAAADUgJAOHQQAB9AAACHDYp4vZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//sQZAAP8AAAaQAAAAgAAA0gAAABAAABpAAAACAAADSAAAAETEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV" type="audio/mpeg">
+    </audio>
+    <audio id="saveSound" preload="auto">
+        <source src="data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA//tQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAABAAACcQCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8AAABQTEFNRTMuMTAwBKkAAAAAAAAAADUgJAOHQQAB9AAACHDYp4vZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//sQZAAP8AAAaQAAAAgAAA0gAAABAAABpAAAACAAADSAAAAETEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV" type="audio/mpeg">
+    </audio>
 
     <script>
         // Elementos DOM
@@ -374,28 +383,31 @@
         // Gerar uma nova paleta
         function generatePalette() {
             playSound(generateSound);
-            currentPalette = [];
+            const newPalette = [];
             
             for (let i = 0; i < 5; i++) {
                 // Se a cor estiver travada, mantenha-a
-                if (lockedColors[i]) {
-                    currentPalette.push(currentPalette[i]);
+                if (lockedColors[i] && currentPalette[i]) {
+                    newPalette.push(currentPalette[i]);
                     continue;
                 }
                 
                 // Gera uma cor HSL harmoniosa
                 const baseHue = Math.floor(Math.random() * 360);
-                const saturation = 70 + Math.floor(Math.random() * 30);
-                const lightness = 40 + Math.floor(Math.random() * 40);
                 
-                // Varia o matiz para criar harmonia
+                // Varia o matiz para criar harmonia (esquema análogo)
                 const hueVariation = (i - 2) * 30;
                 const hue = (baseHue + hueVariation + 360) % 360;
                 
+                // Saturação e luminosidade variadas para contraste
+                const saturation = 60 + Math.floor(Math.random() * 35);
+                const lightness = 30 + Math.floor(Math.random() * 40);
+                
                 const color = hslToHex(hue, saturation, lightness);
-                currentPalette.push(color);
+                newPalette.push(color);
             }
             
+            currentPalette = newPalette;
             renderPalette();
         }
         
@@ -536,6 +548,13 @@
             playSound(clickSound);
             navigator.clipboard.writeText(text).catch(err => {
                 console.error('Erro ao copiar texto: ', err);
+                // Fallback para navegadores mais antigos
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
             });
         }
         
@@ -569,26 +588,29 @@
                 particle.style.borderRadius = '50%';
                 particle.style.left = `${Math.random() * 100}vw`;
                 particle.style.top = `${Math.random() * 100}vh`;
-                particle.style.animation = `float ${Math.random() * 20 + 10}s linear infinite`;
                 
-                // Adicionar animação de flutuação
-                const style = document.createElement('style');
-                style.textContent = `
-                    @keyframes float {
-                        0% { transform: translate(0, 0) rotate(0deg); }
+                // Animação única para cada partícula
+                const duration = Math.random() * 20 + 10;
+                const keyframes = `
+                    @keyframes float-${i} {
+                        0% { transform: translate(0, 0) rotate(0deg); opacity: ${Math.random() * 0.5 + 0.3}; }
                         25% { transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) rotate(90deg); }
-                        50% { transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) rotate(180deg); }
+                        50% { transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) rotate(180deg); opacity: ${Math.random() * 0.5 + 0.5}; }
                         75% { transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) rotate(270deg); }
-                        100% { transform: translate(0, 0) rotate(360deg); }
+                        100% { transform: translate(0, 0) rotate(360deg); opacity: ${Math.random() * 0.5 + 0.3}; }
                     }
                 `;
+                
+                const style = document.createElement('style');
+                style.textContent = keyframes;
                 document.head.appendChild(style);
                 
+                particle.style.animation = `float-${i} ${duration}s linear infinite`;
                 particlesContainer.appendChild(particle);
             }
         }
         
-        // Utilitários
+        // Função corrigida para converter HSL para HEX
         function hslToHex(h, s, l) {
             h /= 360;
             s /= 100;
@@ -597,7 +619,7 @@
             let r, g, b;
             
             if (s === 0) {
-                r = g = b = l;
+                r = g = b = l; // Achromatic
             } else {
                 const hue2rgb = (p, q, t) => {
                     if (t < 0) t += 1;
@@ -624,18 +646,72 @@
             return `#${toHex(r)}${toHex(g)}${toHex(b)}`.toUpperCase();
         }
         
+        // Gerar nomes criativos para cores
         function generateColorName(hex) {
-            // Nomes criativos para cores
-            const colorNames = [
-                "Aurora", "Crepúsculo", "Oceano", "Floresta", "Deserto",
-                "Ametista", "Safira", "Rubi", "Esmeralda", "Topázio",
-                "Lavanda", "Cereja", "Açafrão", "Jade", "Âmbar",
-                "Cobalto", "Carmesim", "Turquesa", "Magenta", "Ciano"
+            // Extrair componentes RGB para nome mais preciso
+            const r = parseInt(hex.slice(1, 3), 16);
+            const g = parseInt(hex.slice(3, 5), 16);
+            const b = parseInt(hex.slice(5, 7), 16);
+            
+            // Determinar a cor predominante
+            const max = Math.max(r, g, b);
+            const min = Math.min(r, g, b);
+            const delta = max - min;
+            
+            let hue = 0;
+            if (delta !== 0) {
+                if (max === r) hue = ((g - b) / delta) % 6;
+                else if (max === g) hue = (b - r) / delta + 2;
+                else hue = (r - g) / delta + 4;
+            }
+            hue = Math.round(hue * 60);
+            if (hue < 0) hue += 360;
+            
+            // Nomes baseados no matiz
+            const hueNames = [
+                {range: [0, 15], names: ["Vermelho", "Escarlate", "Carmesim", "Rubi"]},
+                {range: [16, 45], names: ["Laranja", "Âmbar", "Abóbora", "Tangerina"]},
+                {range: [46, 75], names: ["Dourado", "Mostarda", "Ouro", "Amarelo"]},
+                {range: [76, 165], names: ["Verde", "Esmeralda", "Jade", "Floresta"]},
+                {range: [166, 260], names: ["Azul", "Safira", "Cobalto", "Oceano"]},
+                {range: [261, 290], names: ["Roxo", "Ametista", "Lavanda", "Orquídea"]},
+                {range: [291, 330], names: ["Rosa", "Magenta", "Fúcsia", "Cereja"]},
+                {range: [331, 360], names: ["Vermelho", "Borgonha", "Carmim", "Vinho"]}
             ];
             
-            // Usar o valor hexadecimal para escolher um nome
-            const index = parseInt(hex.slice(1), 16) % colorNames.length;
-            return colorNames[index];
+            let colorCategory = "Neutro";
+            let colorNames = ["Cinza", "Grafite", "Prata", "Platina"];
+            
+            for (const category of hueNames) {
+                if (hue >= category.range[0] && hue <= category.range[1]) {
+                    colorCategory = category.names;
+                    break;
+                }
+            }
+            
+            // Escolher nome aleatório baseado na saturação e luminosidade
+            const saturation = delta / max;
+            const lightness = (max + min) / 2 / 255;
+            
+            if (saturation < 0.1) {
+                // Cores dessaturadas (cinzas)
+                if (lightness < 0.3) colorNames = ["Preto", "Ébano", "Obsidiana", "Noite"];
+                else if (lightness > 0.7) colorNames = ["Branco", "Neve", "Pérola", "Alabastro"];
+                else colorNames = ["Cinza", "Grafite", "Prata", "Aço"];
+            } else if (saturation > 0.7) {
+                // Cores saturadas
+                if (lightness < 0.3) colorNames = ["Escuro", "Profundo", "Sombrio", "Noturno"];
+                else if (lightness > 0.7) colorNames = ["Claro", "Brilhante", "Vibrante", "Radiante"];
+                // Para cores médias, usar os nomes da categoria
+            }
+            
+            // Se for uma cor saturada, usar nomes da categoria de matiz
+            if (saturation >= 0.1) {
+                colorNames = Array.isArray(colorCategory) ? colorCategory : [colorCategory];
+            }
+            
+            const randomIndex = Math.floor(Math.random() * colorNames.length);
+            return colorNames[randomIndex];
         }
         
         // Event Listeners
@@ -645,7 +721,7 @@
         
         // Tecla de atalho: Espaço para gerar nova paleta
         document.addEventListener('keydown', (e) => {
-            if (e.code === 'Space') {
+            if (e.code === 'Space' && e.target === document.body) {
                 e.preventDefault();
                 generatePalette();
             }
